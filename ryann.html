@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Will You Be My Valentine? 💖</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff4d6d, #ffb3c6);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* HEARTS BACKGROUND LAYER */
+.hearts-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Floating Hearts */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  animation: floatUp linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-100vh) scale(1.6); opacity: 0; }
+}
+
+/* Pages */
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  z-index: 2; /* ABOVE HEARTS */
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.9);
+}
+
+.second-page,
+.third-page,
+.fourth-page {
+  background: transparent;
+  flex-direction: column;
+  text-align: center;
+  color: white;
+}
+
+/* Glass Card */
+.love-box {
+  position: relative;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  padding: 35px;
+  border-radius: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  max-width: 90%;
+  text-align: center;
+  animation: floatBox 3s ease-in-out infinite;
+}
+
+@keyframes floatBox {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.bear-img {
+  width: 100%;
+  max-width: 260px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #fff, 0 0 20px #ffb3c6; }
+  to { text-shadow: 0 0 20px #fff, 0 0 40px #ff4d6d; }
+}
+
+button {
+  border: none;
+  padding: 14px 26px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin: 10px;
+}
+
+.primary {
+  background: #ff4d6d;
+  color: white;
+}
+
+.primary:hover {
+  transform: scale(1.05);
+}
+
+.escape {
+  background: #adb5bd;
+  color: white;
+  position: absolute;
+  transition: left 0.25s ease, top 0.25s ease;
+}
+
+.text-btn {
+  background: white;
+  color: #ff4d6d;
+  font-size: 18px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEARTS BACKGROUND -->
+<div class="hearts-container" id="heartsContainer"></div>
+
+<!-- PAGE 1 -->
+<div class="page second-page" id="page1">
+  <div class="love-box">
+    <img class="bear-img" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+    <h2>Will you be my Valentine? 💖</h2>
+    <button class="primary" id="yesBtn">Yes 💘</button>
+    <button class="escape" id="noBtn">No 🙈</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page second-page hidden" id="page2">
+  <div class="love-box">
+    <img class="bear-img" src="https://media.giphy.com/media/l4FGpPki5v2Bcd6Ss/giphy.gif">
+    <h2>Are you sure you want to be my Valentine? 💕</h2>
+    <button class="primary" id="sureBtn">Yes 100% sure 💖</button>
+    <button class="escape" id="thinkBtn">Let me think 🙈</button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page third-page hidden" id="page3">
+  <div class="love-box">
+    <img class="bear-img" src="https://media.giphy.com/media/3o7TKTDn976rzVgky4/giphy.gif">
+    <h2>Promise me you'll be my Valentine 💝</h2>
+    <button class="primary" id="promiseBtn">Yes I promise 💖</button>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page fourth-page hidden" id="page4">
+  <div class="love-box">
+    <img class="bear-img" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+    <h2>Yayyy 💖</h2>
+    <p>
+      You made this time so special for me.<br>
+       It's so embarrassing that I sent this to you, Valentine Webpage, that I made even though we just first met online. I hope we get to know each other and share some hobbies. unta maabot pud sa punto naa na label charr!😘<br><br>
+      You can text me by clicking below 💌
+    </p>
+    <a href="https://m.me/" target="_blank">
+      <button class="text-btn"> no need to response napo 💬</button>
+    </a>
+  </div>
+</div>
+
+<script>
+const heartsContainer = document.getElementById("heartsContainer");
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "%";
+  heart.style.fontSize = Math.random() * 30 + 20 + "px";
+  heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+  heartsContainer.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 300);
+
+// Buttons
+function moveInsideContainer(btn) {
+  const parent = btn.parentElement;
+  const padding = 10;
+  const maxX = parent.clientWidth - btn.offsetWidth - padding;
+  const maxY = parent.clientHeight - btn.offsetHeight - padding;
+  btn.style.left = Math.random() * maxX + "px";
+  btn.style.top = Math.random() * maxY + "px";
+}
+
+function makeButtonEscape(btn) {
+  btn.addEventListener("mouseover", () => moveInsideContainer(btn));
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    moveInsideContainer(btn);
+  });
+  btn.addEventListener("touchstart", () => moveInsideContainer(btn));
+}
+
+makeButtonEscape(document.getElementById("noBtn"));
+makeButtonEscape(document.getElementById("thinkBtn"));
+
+document.getElementById("yesBtn").onclick = () => {
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+};
+
+document.getElementById("sureBtn").onclick = () => {
+  page2.classList.add("hidden");
+  page3.classList.remove("hidden");
+};
+
+document.getElementById("promiseBtn").onclick = () => {
+  page3.classList.add("hidden");
+  page4.classList.remove("hidden");
+};
+</script>
+
+</body>
+</html>
